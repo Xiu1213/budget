@@ -263,6 +263,17 @@
   }
 
   .deposit-form{ display:flex; gap:8px; margin-top:10px; }
+
+  .note-input-row{ display:flex; gap:6px; }
+  .note-input-row input{ flex:1; min-width:0; }
+  .mic-btn{
+    flex-shrink:0; width:40px; height:40px; border-radius:12px; border:2px solid var(--line);
+    background:#fff; color:var(--pink-deep); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0;
+  }
+  .mic-btn svg{ width:18px; height:18px; }
+  .mic-btn.listening{ background:var(--brick); border-color:var(--brick); color:#fff; animation:micPulse 1s ease-in-out infinite; }
+  @keyframes micPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(178,58,46,0.4);} 50%{ box-shadow:0 0 0 8px rgba(178,58,46,0);} }
   .deposit-form input{ flex:1; min-width:0; }
   .deposit-form .add-btn{ width:auto; padding:9px 18px; margin-top:0;}
 
@@ -337,6 +348,35 @@
   .honor-card .trophy{ font-size:26px; }
   .honor-del{ background:none; border:none; color:var(--ink-soft); font-size:11px; font-weight:700; cursor:pointer; margin-left:8px;}
 
+  .currency-row{ display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#fff; border:1.5px solid var(--line); border-radius:12px; margin-bottom:6px; font-family:'Baloo 2'; font-size:13px;}
+  .currency-row .code{ font-weight:800; color:var(--pink-deep); }
+  .currency-row .del{ background:none; border:none; color:var(--ink-soft); font-size:11px; cursor:pointer; font-family:'M PLUS Rounded 1c'; font-weight:700;}
+
+  .trip-card{ background:var(--card); border-radius:22px; padding:16px 16px 18px; margin-bottom:16px; box-shadow:0 4px 16px rgba(58,52,80,0.06);}
+  .trip-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;}
+  .trip-name{ font-family:'M PLUS Rounded 1c'; font-weight:800; font-size:16px;}
+  .trip-date{ font-size:11px; color:var(--ink-soft); font-weight:600; margin-top:2px;}
+  .trip-actions{ display:flex; gap:6px; }
+  .trip-actions button{ font-size:11px; font-weight:700; border-radius:10px; padding:5px 10px; border:none; cursor:pointer; }
+  .trip-close-btn{ background:var(--yellow); color:#6B4A0A; }
+  .trip-del-btn{ background:none; color:var(--ink-soft); }
+  .trip-totals{ display:flex; gap:10px; margin:10px 0; flex-wrap:wrap;}
+  .trip-totals .t-box{ flex:1; min-width:90px; background:var(--pink-pale); border-radius:12px; padding:8px 10px;}
+  .trip-totals .t-box .lbl{ font-size:10px; color:var(--ink-soft); font-weight:700;}
+  .trip-totals .t-box .val{ font-family:'Baloo 2'; font-weight:800; font-size:15px;}
+  .trip-entry-form{ background:var(--pink-pale); border-radius:14px; padding:12px; margin:10px 0;}
+  .trip-entry-form .form-grid{ margin-bottom:8px; }
+  .trip-entries{ margin-top:10px; }
+  .trip-entry-row{ display:flex; justify-content:space-between; align-items:center; padding:7px 2px; border-bottom:1px dashed var(--line); font-size:12.5px;}
+  .trip-entry-row .desc{ flex:1; }
+  .trip-entry-row .orig{ font-size:10px; color:var(--ink-soft); display:block; }
+
+  .archive-trip-card{
+    background:linear-gradient(135deg,#FFF6E0,var(--pink-pale)); border-radius:18px; padding:14px 16px; margin-bottom:10px;
+  }
+  .archive-trip-card .name{ font-family:'M PLUS Rounded 1c'; font-weight:800; font-size:14px; }
+  .archive-trip-card .meta{ font-size:11px; color:var(--ink-soft); margin-top:3px;}
+
   .goal-reorder{ display:flex; flex-direction:column; gap:2px; }
   .reorder-btn{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:13px; padding:0 4px; }
   .reorder-btn:hover{ color:var(--pink-deep); }
@@ -409,7 +449,7 @@
     <div class="tab active" data-tab="record"><span class="icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketchy)"><rect x="7" y="4" width="18" height="24" rx="2"/><line x1="7" y1="9" x2="4" y2="9"/><line x1="7" y1="15" x2="4" y2="15"/><line x1="7" y1="21" x2="4" y2="21"/><line x1="11" y1="12" x2="21" y2="12"/><line x1="11" y1="18" x2="19" y2="18"/></g></svg></span>收支記錄</div>
     <div class="tab" data-tab="budget"><span class="icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketchy)"><rect x="4" y="8" width="24" height="17" rx="2"/><path d="M4 9 L16 19 L28 9"/><path d="M16 21 C 12.5 17.5, 10.5 15.5, 10.5 13 C10.5 11.2 11.9 9.8 13.5 9.8 C14.6 9.8 15.5 10.5 16 11.3 C16.5 10.5 17.4 9.8 18.5 9.8 C20.1 9.8 21.5 11.2 21.5 13 C21.5 15.5 19.5 17.5 16 21 Z"/></g></svg></span>預算信封</div>
     <div class="tab" data-tab="goal"><span class="icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketchy)"><path d="M9 12 L6 5 L13 10"/><path d="M23 12 L26 5 L19 10"/><circle cx="16" cy="17" r="10"/><circle cx="12.5" cy="16" r="1.1" fill="currentColor" stroke="none"/><circle cx="19.5" cy="16" r="1.1" fill="currentColor" stroke="none"/><path d="M14 21 Q16 23 18 21"/></g></svg></span>夢想存錢</div>
-    <div class="tab" data-tab="stats"><span class="icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketchy)"><line x1="6" y1="26" x2="26" y2="26"/><rect x="8" y="16" width="4" height="10"/><rect x="14" y="10" width="4" height="16"/><rect x="20" y="19" width="4" height="7"/></g></svg></span>統計</div>
+    <div class="tab" data-tab="travel"><span class="icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#sketchy)"><path d="M14 18 L4 22 L4 19 L12 15 L5 9 L8 8 L17 12 L22 6 C23 5 25 5 26 6 C27 7 27 9 26 10 L20 15 L24 24 L21 25 L17 18 Z"/></g></svg></span>旅遊</div>
   </div>
 
   <!-- ===================== TAB 1: 收支記錄 ===================== -->
@@ -457,9 +497,22 @@
         <div><label>自訂類別名稱</label><input type="text" id="in-category-custom" placeholder="輸入新的類別名稱"></div>
       </div>
       <div class="form-grid">
-        <div><label>項目內容</label><input type="text" id="in-note" placeholder="例如:早餐、出去玩"></div>
+        <div>
+          <label>項目內容</label>
+          <div class="note-input-row">
+            <input type="text" id="in-note" placeholder="例如:早餐、出去玩">
+            <button type="button" class="mic-btn" id="btn-voice" title="語音輸入">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/>
+                <path d="M19 11a7 7 0 0 1-14 0"/>
+                <line x1="12" y1="18" x2="12" y2="22"/>
+              </svg>
+            </button>
+          </div>
+        </div>
         <div><label>金額</label><input type="number" id="in-amount" placeholder="0" min="0" step="1"></div>
       </div>
+      <p class="status-note" id="voice-hint" style="display:none; margin:6px 0 0;"></p>
       <button class="add-btn" id="btn-add">＋ 新增紀錄</button>
     </div>
 
@@ -498,6 +551,16 @@
       <h2>📈 月度趨勢</h2>
       <div class="chart-legend"><span><i class="dot" style="background:var(--mint-deep)"></i>月收入</span><span><i class="dot" style="background:var(--brick)"></i>月支出</span></div>
       <svg class="chart" id="trend-chart" viewBox="0 0 680 240" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="card summary-card" id="monthly-summary-card"></div>
+    <div class="card">
+      <h2>📈 近 30 天存錢趨勢</h2>
+      <svg class="chart" id="stats-trend-chart" viewBox="0 0 680 220" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <div class="card">
+      <h2>🥧 各夢想存款比例</h2>
+      <div id="stats-pie-wrap"></div>
     </div>
 
     <p class="status-note">資料已自動儲存,下次開啟仍會保留。</p>
@@ -571,17 +634,40 @@
     <p class="status-note" style="margin-top:16px;">點選已解鎖的貓咪造型,可以更換每個夢想進度條上跟著跑的貓咪。點貓咪本人會跟你說話喔!</p>
   </div>
 
-  <!-- ===================== TAB 4: 統計 ===================== -->
-  <div class="panel" id="panel-stats">
-    <div class="card summary-card" id="monthly-summary-card"></div>
+  <!-- ===================== TAB 4: 旅遊 ===================== -->
+  <div class="panel" id="panel-travel">
+    <p class="status-note" style="margin-bottom:14px;">旅遊收支跟平常的收支記錄是分開算的。每個行程可以建立多筆,每一筆紀錄自己選幣別,系統會自動換算成台幣。行程結束後可以結案封存。</p>
+
     <div class="card">
-      <h2>📈 近 30 天存錢趨勢</h2>
-      <svg class="chart" id="stats-trend-chart" viewBox="0 0 680 220" preserveAspectRatio="xMidYMid meet"></svg>
+      <h2>💱 幣別匯率設定</h2>
+      <p class="status-note" style="margin:0 0 10px;">先在這裡加好會用到的幣別跟匯率,新增紀錄時就能直接選。台幣(TWD)已內建,匯率固定是 1。</p>
+      <div id="currency-rate-list"></div>
+      <div class="form-grid" style="margin-top:10px;">
+        <div><label>幣別代碼</label><input type="text" id="new-currency-code" placeholder="例如:JPY、USD"></div>
+        <div>
+          <label>匯率(1 單位 = ? 台幣)</label>
+          <div class="note-input-row">
+            <input type="number" id="new-currency-rate" placeholder="例如 0.21" min="0" step="0.0001">
+            <button type="button" class="mic-btn" id="btn-fetch-rate" title="抓今日參考匯率">🔄</button>
+          </div>
+        </div>
+      </div>
+      <p class="status-note" id="rate-fetch-hint" style="margin:0 0 10px;"></p>
+      <button class="add-btn ghost" id="btn-add-currency">＋ 新增幣別</button>
     </div>
+
     <div class="card">
-      <h2>🥧 各夢想存款比例</h2>
-      <div id="stats-pie-wrap"></div>
+      <h2>✈️ 新增一個旅程</h2>
+      <div class="form-grid">
+        <div><label>行程名稱</label><input type="text" id="new-trip-name" placeholder="例如:東京五日遊"></div>
+        <div><label>出發日期(選填)</label><input type="date" id="new-trip-date"></div>
+      </div>
+      <button class="add-btn" id="btn-add-trip">＋ 建立行程</button>
     </div>
+
+    <div id="trip-list"></div>
+
+    <div id="trip-archive-section"></div>
   </div>
 
 </div>
@@ -934,6 +1020,86 @@ document.getElementById('in-category').addEventListener('change', ()=>{
   document.getElementById('custom-category-row').style.display = val==='__custom__' ? 'block' : 'none';
 });
 
+/* ============ Voice input (Web Speech API) ============ */
+function chineseToNumber(str){
+  const cnNums = {'零':0,'〇':0,'一':1,'二':2,'兩':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};
+  const cnUnits = {'十':10,'百':100,'千':1000};
+  function parseSection(s){
+    if(!s) return 0;
+    let result = 0, current = 0;
+    for(let i=0;i<s.length;i++){
+      const ch = s[i];
+      if(cnNums[ch]!==undefined){ current = cnNums[ch]; }
+      else if(cnUnits[ch]!==undefined){
+        if(current===0 && ch==='十' && result===0) current = 1;
+        result += (current||1) * cnUnits[ch];
+        current = 0;
+      }
+    }
+    return result + current;
+  }
+  if(/^\d+(\.\d+)?$/.test(str)) return parseFloat(str);
+  const parts = str.split(/萬|万/);
+  if(parts.length===2) return parseSection(parts[0])*10000 + parseSection(parts[1]);
+  return parseSection(parts[0]);
+}
+
+function parseVoiceText(text){
+  text = text.trim().replace(/[,。,.!?、\s]+$/,'');
+  const m = text.match(/([0-9零〇一二兩两三四五六七八九十百千萬万]+)\s*(元|塊|块)?$/);
+  if(!m) return { item: text, amount: null };
+  const amount = chineseToNumber(m[1]);
+  const item = text.slice(0, m.index).trim();
+  return { item: item || text, amount: (isNaN(amount)||amount<=0) ? null : amount };
+}
+
+const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognizer = null;
+if(SpeechRecognitionAPI){
+  recognizer = new SpeechRecognitionAPI();
+  recognizer.lang = 'zh-TW';
+  recognizer.continuous = false;
+  recognizer.interimResults = false;
+  recognizer.maxAlternatives = 1;
+}
+const micBtn = document.getElementById('btn-voice');
+const voiceHint = document.getElementById('voice-hint');
+function showVoiceHint(msg){ voiceHint.textContent = msg; voiceHint.style.display='block'; }
+if(!SpeechRecognitionAPI){
+  micBtn.addEventListener('click', ()=>{
+    showVoiceHint('這個瀏覽器不支援語音輸入,請直接手動輸入。iPhone 請用 Safari 開啟本頁。');
+  });
+}else{
+  let listening = false;
+  micBtn.addEventListener('click', ()=>{
+    if(listening){ recognizer.stop(); return; }
+    try{ recognizer.start(); }catch(e){ return; }
+  });
+  recognizer.addEventListener('start', ()=>{
+    listening = true;
+    micBtn.classList.add('listening');
+    showVoiceHint('🎙️ 聽你說...例如「午餐 120」');
+  });
+  recognizer.addEventListener('end', ()=>{
+    listening = false;
+    micBtn.classList.remove('listening');
+  });
+  recognizer.addEventListener('error', (e)=>{
+    listening = false;
+    micBtn.classList.remove('listening');
+    if(e.error==='not-allowed'){ showVoiceHint('沒有取得麥克風權限,請到 iPhone 設定 → Safari → 麥克風 允許存取。'); }
+    else{ showVoiceHint('沒聽清楚,再試一次,或直接手動輸入。'); }
+  });
+  recognizer.addEventListener('result', (e)=>{
+    const transcript = e.results[0][0].transcript;
+    const { item, amount } = parseVoiceText(transcript);
+    if(item) document.getElementById('in-note').value = item;
+    if(amount) document.getElementById('in-amount').value = amount;
+    if(currentType==='income'){ document.getElementById('btn-expense').click(); }
+    showVoiceHint(`✓ 辨識結果:「${transcript}」→ 項目「${item}」金額 ${amount||'—'}`);
+  });
+}
+
 document.getElementById('btn-add').addEventListener('click', ()=>{
   const date = document.getElementById('in-date').value;
   const amount = parseFloat(document.getElementById('in-amount').value);
@@ -1186,6 +1352,14 @@ document.getElementById('btn-add-budget').addEventListener('click', ()=>{
   saveBudgets(); renderAll();
 });
 function deleteBudget(id){ budgets = budgets.filter(b=>b.id!==id); saveBudgets(); renderAll(); }
+function moveBudgetUp(id){
+  const i = budgets.findIndex(b=>b.id===id);
+  if(i>0){ [budgets[i-1], budgets[i]] = [budgets[i], budgets[i-1]]; saveBudgets(); renderAll(); }
+}
+function moveBudgetDown(id){
+  const i = budgets.findIndex(b=>b.id===id);
+  if(i>=0 && i<budgets.length-1){ [budgets[i+1], budgets[i]] = [budgets[i], budgets[i+1]]; saveBudgets(); renderAll(); }
+}
 
 function getWeekRange(d=new Date()){
   const day = d.getDay();
@@ -1244,10 +1418,17 @@ function renderBudgetTab(){
       const barColor = pct>=100 ? 'var(--brick)' : (pct>=80 ? '#F0B429' : 'var(--mint-deep)');
       const remainClass = remain<0 ? 'over' : (pct>=80 ? 'warn' : 'ok');
       const periodLabel = isWeekly ? '本週' : '本月';
+      const idx = budgets.indexOf(b);
       return `
         <div class="envelope">
           <div class="env-top">
-            <div class="env-name">${escapeHtml(b.category)} <span style="font-size:10px; color:var(--ink-soft); font-weight:500;">· ${periodLabel}</span></div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="goal-reorder">
+                <button class="reorder-btn" onclick="moveBudgetUp(${b.id})" ${idx===0?'disabled style="opacity:.25;"':''}>▲</button>
+                <button class="reorder-btn" onclick="moveBudgetDown(${b.id})" ${idx===budgets.length-1?'disabled style="opacity:.25;"':''}>▼</button>
+              </div>
+              <div class="env-name">${escapeHtml(b.category)} <span style="font-size:10px; color:var(--ink-soft); font-weight:500;">· ${periodLabel}</span></div>
+            </div>
             <button class="env-del" onclick="deleteBudget(${b.id})">刪除</button>
           </div>
           <div class="env-figures">預算 <b>${fmt(b.amount)}</b>${rolloverAmt>0?` <span style="color:var(--mint-deep);">(+${fmt(rolloverAmt)} 滾存)</span>`:''}</div>
@@ -1521,6 +1702,243 @@ function renderAll(){
   renderBudgetTab();
   renderGoalTab();
   renderStatsTab();
+  renderTravelTab();
+}
+
+/* ============ TAB 4: 旅遊 ============ */
+let travelData = { rates:{ TWD:1, USD:31.5, JPY:0.21 }, trips:[], archivedTrips:[] };
+const K_TRAVEL = 'cat-ledger-travel';
+async function loadTravel(){
+  try{
+    const v = await storageGet(K_TRAVEL);
+    if(v) travelData = JSON.parse(v);
+  }catch(e){}
+  if(!travelData.rates) travelData.rates = {};
+  if(!travelData.rates.TWD) travelData.rates.TWD = 1;
+  if(!travelData.trips) travelData.trips = [];
+  if(!travelData.archivedTrips) travelData.archivedTrips = [];
+  document.getElementById('new-trip-date').value = new Date().toISOString().slice(0,10);
+  renderTravelTab();
+}
+async function saveTravel(){ await storageSet(K_TRAVEL, JSON.stringify(travelData)); }
+
+/* -- currency rates -- */
+async function fetchReferenceRate(code){
+  try{
+    const res = await fetch(`https://api.frankfurter.app/latest?from=${encodeURIComponent(code)}&to=TWD`);
+    if(!res.ok) return null;
+    const data = await res.json();
+    const rate = data && data.rates && data.rates.TWD;
+    return (typeof rate==='number' && rate>0) ? rate : null;
+  }catch(e){
+    return null;
+  }
+}
+document.getElementById('btn-fetch-rate').addEventListener('click', async ()=>{
+  const code = document.getElementById('new-currency-code').value.trim().toUpperCase();
+  const hint = document.getElementById('rate-fetch-hint');
+  if(!code){ hint.textContent = '請先在左邊輸入幣別代碼(例如 JPY、USD),再抓匯率。'; return; }
+  const btn = document.getElementById('btn-fetch-rate');
+  btn.disabled = true;
+  hint.textContent = '🔄 查詢中...';
+  const rate = await fetchReferenceRate(code);
+  btn.disabled = false;
+  if(rate){
+    document.getElementById('new-currency-rate').value = rate.toFixed(4);
+    hint.textContent = `✓ 已帶入 ${code} 的今日參考匯率,實際匯率會因刷卡/換匯管道略有落差,建議對照你實際拿到的匯率微調。`;
+  }else{
+    hint.textContent = `抓不到「${code}」的參考匯率,請確認是不是正確的貨幣代碼(例如日圓是 JPY、美金是 USD),或直接手動輸入匯率。`;
+  }
+});
+async function refreshCurrencyRate(code){
+  const hint = document.getElementById('rate-fetch-hint');
+  hint.textContent = `🔄 更新 ${code} 匯率中...`;
+  const rate = await fetchReferenceRate(code);
+  if(rate){
+    travelData.rates[code] = rate;
+    saveTravel(); renderTravelTab();
+    document.getElementById('rate-fetch-hint').textContent = `✓ ${code} 已更新為今日參考匯率 ${rate.toFixed(4)}`;
+  }else{
+    hint.textContent = `抓不到「${code}」的今日匯率,維持原本設定的數字。`;
+  }
+}
+
+document.getElementById('btn-add-currency').addEventListener('click', ()=>{
+  const code = document.getElementById('new-currency-code').value.trim().toUpperCase();
+  const rate = parseFloat(document.getElementById('new-currency-rate').value);
+  if(!code || !rate || rate<=0){ alert('請輸入幣別代碼與有效匯率'); return; }
+  travelData.rates[code] = rate;
+  document.getElementById('new-currency-code').value='';
+  document.getElementById('new-currency-rate').value='';
+  saveTravel(); renderTravelTab();
+});
+function deleteCurrency(code){
+  if(code==='TWD') return;
+  delete travelData.rates[code];
+  saveTravel(); renderTravelTab();
+}
+
+/* -- trips -- */
+document.getElementById('btn-add-trip').addEventListener('click', ()=>{
+  const name = document.getElementById('new-trip-name').value.trim();
+  const date = document.getElementById('new-trip-date').value || null;
+  if(!name){ alert('請填寫行程名稱'); return; }
+  travelData.trips.push({ id: Date.now(), name, date, entries: [] });
+  document.getElementById('new-trip-name').value='';
+  saveTravel(); renderTravelTab();
+});
+function deleteTrip(id){
+  if(!confirm('確定要刪除這個行程嗎?裡面的紀錄也會一併刪除。')) return;
+  travelData.trips = travelData.trips.filter(t=>t.id!==id);
+  saveTravel(); renderTravelTab();
+}
+function archiveTrip(id){
+  const i = travelData.trips.findIndex(t=>t.id===id);
+  if(i<0) return;
+  const trip = travelData.trips[i];
+  let inc=0, exp=0;
+  trip.entries.forEach(e=>{ if(e.type==='income') inc+=e.twd; else exp+=e.twd; });
+  travelData.archivedTrips.push({ id: trip.id, name: trip.name, date: trip.date, income: inc, expense: exp, entryCount: trip.entries.length, archivedDate: new Date().toISOString().slice(0,10) });
+  travelData.trips.splice(i,1);
+  saveTravel(); renderTravelTab();
+}
+function deleteArchivedTrip(id){
+  travelData.archivedTrips = travelData.archivedTrips.filter(t=>t.id!==id);
+  saveTravel(); renderTravelTab();
+}
+
+const tripEntryType = {};
+function setTripType(tripId, type){
+  tripEntryType[tripId] = type;
+  document.getElementById('trip-btn-income-'+tripId).classList.toggle('active-income', type==='income');
+  document.getElementById('trip-btn-expense-'+tripId).classList.toggle('active-expense', type==='expense');
+}
+function updateTripPreview(tripId){
+  const currency = document.getElementById('trip-currency-'+tripId).value;
+  const amt = parseFloat(document.getElementById('trip-amount-'+tripId).value);
+  const rate = travelData.rates[currency] || 0;
+  const preview = document.getElementById('trip-preview-'+tripId);
+  preview.textContent = (amt>0 && rate>0) ? `≈ ${fmt(amt*rate)} 台幣` : '';
+}
+function addTripEntry(tripId){
+  const trip = travelData.trips.find(t=>t.id===tripId);
+  if(!trip) return;
+  const date = document.getElementById('trip-date-'+tripId).value;
+  const note = document.getElementById('trip-note-'+tripId).value.trim();
+  const currency = document.getElementById('trip-currency-'+tripId).value;
+  const amount = parseFloat(document.getElementById('trip-amount-'+tripId).value);
+  const type = tripEntryType[tripId] || 'expense';
+  const rate = travelData.rates[currency];
+  if(!date || !note || !amount || amount<=0){ alert('請填寫日期、項目內容,並輸入有效金額'); return; }
+  if(!rate){ alert('這個幣別還沒有設定匯率,請先到上面新增'); return; }
+  trip.entries.push({ id: Date.now(), date, note, type, amount, currency, rate, twd: amount*rate });
+  trip.entries.sort((a,b)=> b.date.localeCompare(a.date));
+  document.getElementById('trip-note-'+tripId).value='';
+  document.getElementById('trip-amount-'+tripId).value='';
+  updateTripPreview(tripId);
+  saveTravel(); renderTravelTab();
+}
+function deleteTripEntry(tripId, entryId){
+  const trip = travelData.trips.find(t=>t.id===tripId);
+  if(!trip) return;
+  trip.entries = trip.entries.filter(e=>e.id!==entryId);
+  saveTravel(); renderTravelTab();
+}
+
+function renderTravelTab(){
+  // currency rate list
+  const rateList = document.getElementById('currency-rate-list');
+  const codes = Object.keys(travelData.rates);
+  rateList.innerHTML = codes.map(code=>`
+    <div class="currency-row">
+      <span><span class="code">${escapeHtml(code)}</span> = ${travelData.rates[code]} 台幣</span>
+      <span>
+        ${code!=='TWD' ? `<button class="del" onclick="refreshCurrencyRate('${code}')" style="margin-right:8px;">🔄 更新</button><button class="del" onclick="deleteCurrency('${code}')">刪除</button>` : '<span style="font-size:10px; color:var(--ink-soft);">內建</span>'}
+      </span>
+    </div>`).join('');
+
+  const currencyOptions = codes.map(c=>`<option value="${c}">${c}</option>`).join('');
+
+  // active trips
+  const list = document.getElementById('trip-list');
+  if(travelData.trips.length===0){
+    list.innerHTML = '<p class="empty-hint">還沒有旅程,在上方新增第一個吧(例如:東京五日遊)</p>';
+  }else{
+    list.innerHTML = travelData.trips.map(trip=>{
+      let inc=0, exp=0;
+      trip.entries.forEach(e=>{ if(e.type==='income') inc+=e.twd; else exp+=e.twd; });
+      if(!tripEntryType[trip.id]) tripEntryType[trip.id] = 'expense';
+      const type = tripEntryType[trip.id];
+      const entryRows = trip.entries.length===0
+        ? '<div class="trip-entry-row" style="justify-content:center; color:var(--ink-soft);">還沒有紀錄</div>'
+        : trip.entries.map(e=>`
+            <div class="trip-entry-row">
+              <span class="desc">${escapeHtml(e.note)}<span class="orig">${e.amount.toLocaleString('zh-TW')} ${escapeHtml(e.currency)}</span></span>
+              <span class="amt ${e.type}">${e.type==='income'?'+':'-'}${fmt(e.twd)}</span>
+              <button class="del-btn" onclick="deleteTripEntry(${trip.id},${e.id})">✕</button>
+            </div>`).join('');
+      return `
+        <div class="trip-card">
+          <div class="trip-header">
+            <div>
+              <div class="trip-name">✈️ ${escapeHtml(trip.name)}</div>
+              ${trip.date ? `<div class="trip-date">🗓️ ${trip.date}</div>` : ''}
+            </div>
+            <div class="trip-actions">
+              <button class="trip-close-btn" onclick="archiveTrip(${trip.id})">🏁 行程結束,結案</button>
+              <button class="trip-del-btn" onclick="deleteTrip(${trip.id})">刪除</button>
+            </div>
+          </div>
+          <div class="trip-totals">
+            <div class="t-box"><div class="lbl">收入</div><div class="val" style="color:var(--mint-deep);">${fmt(inc)}</div></div>
+            <div class="t-box"><div class="lbl">支出</div><div class="val" style="color:var(--brick);">${fmt(exp)}</div></div>
+            <div class="t-box"><div class="lbl">結餘</div><div class="val" style="color:var(--pink-deep);">${fmt(inc-exp)}</div></div>
+          </div>
+          <div class="trip-entry-form">
+            <div class="form-grid">
+              <div><label>日期</label><input type="date" id="trip-date-${trip.id}" value="${new Date().toISOString().slice(0,10)}"></div>
+              <div>
+                <label>收支類型</label>
+                <div class="type-toggle">
+                  <div class="type-btn ${type==='income'?'active-income':''}" id="trip-btn-income-${trip.id}" onclick="setTripType(${trip.id},'income')">收入</div>
+                  <div class="type-btn ${type==='expense'?'active-expense':''}" id="trip-btn-expense-${trip.id}" onclick="setTripType(${trip.id},'expense')">支出</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div><label>項目內容</label><input type="text" id="trip-note-${trip.id}" placeholder="例如:機票、拉麵、飯店"></div>
+              <div><label>幣別</label><select id="trip-currency-${trip.id}" onchange="updateTripPreview(${trip.id})">${currencyOptions}</select></div>
+            </div>
+            <div class="form-grid full">
+              <div><label>金額</label><input type="number" id="trip-amount-${trip.id}" placeholder="0" min="0" step="1" oninput="updateTripPreview(${trip.id})"></div>
+            </div>
+            <p class="status-note" id="trip-preview-${trip.id}" style="margin:0 0 8px;"></p>
+            <button class="add-btn" onclick="addTripEntry(${trip.id})">＋ 新增紀錄</button>
+          </div>
+          <div class="trip-entries">${entryRows}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // archived trips
+  const archiveSection = document.getElementById('trip-archive-section');
+  if(travelData.archivedTrips.length===0){
+    archiveSection.innerHTML='';
+  }else{
+    archiveSection.innerHTML = `
+      <div class="honor-title">🏆 旅行回顧</div>
+      ${[...travelData.archivedTrips].reverse().map(t=>`
+        <div class="archive-trip-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <div class="name">✈️ ${escapeHtml(t.name)}</div>
+              <div class="meta">${t.date?t.date+' · ':''}共 ${t.entryCount} 筆 · 支出 ${fmt(t.expense)} · 結餘 ${fmt(t.income-t.expense)}</div>
+            </div>
+            <button class="honor-del" onclick="deleteArchivedTrip(${t.id})">移除</button>
+          </div>
+        </div>`).join('')}
+    `;
+  }
 }
 
 /* ============ TAB 4: 統計 ============ */
@@ -1650,6 +2068,7 @@ function describeDonutSlice(cx,cy,rOuter,rInner,startAngle,endAngle,color){
 
 loadAll();
 loadTheme();
+loadTravel();
 </script>
 </body>
 </html>
