@@ -53,6 +53,29 @@
     --hero-grad:linear-gradient(180deg, #0F1230 0%, #2A2A63 40%, #6B5AA0 75%, #E8A9C4 100%);
     --hero-shadow:rgba(15,18,48,0.6);
   }
+  html[data-theme="forest"]{
+    --bg:#EAF3E4;
+    --card:#FFFFFF;
+    --ink:#23331F;
+    --ink-soft:#7A9070;
+    --pink:#4C7A3D;
+    --pink-deep:#35592A;
+    --pink-pale:#DCEDD2;
+    --blue:#A67C3D;
+    --blue-deep:#7C5A26;
+    --blue-pale:#F3E7D2;
+    --yellow:#C9A227;
+    --mint:#5B8C4A;
+    --mint-deep:#3F6B34;
+    --brick:#A94C3D;
+    --line:#D3E3C8;
+    --glow-pink:#9CC584;
+    --glow-blue:#C9A96A;
+    --page-text:var(--ink);
+    --body-grad:linear-gradient(180deg, #EAF3E4 0%, #DCEBD0 100%);
+    --hero-grad:linear-gradient(180deg, #24381D 0%, #3A5C2E 40%, #557A3F 75%, #7FA35C 100%);
+    --hero-shadow:rgba(20,40,15,0.5);
+  }
   *{box-sizing:border-box;}
   body{
     margin:0;
@@ -85,11 +108,15 @@
   }
   .hero-sub{ color:#FFF2E0; font-size:12px; font-weight:500; letter-spacing:.5px; opacity:.9;}
   html[data-theme="night"] .hero-sub{ color:#E9E6FF; }
+  html[data-theme="forest"] .hero-sub{ color:#E4F0DC; }
   .hero-mascot{ position:absolute; right:14px; bottom:-14px; width:92px; height:92px; filter:drop-shadow(0 4px 10px var(--hero-shadow));}
   .torii-deco{ display:none; }
   .deco-night{ display:none; }
+  .deco-forest{ display:none; }
   html[data-theme="night"] .deco-warm{ display:none; }
   html[data-theme="night"] .deco-night{ display:inline; }
+  html[data-theme="forest"] .deco-warm{ display:none; }
+  html[data-theme="forest"] .deco-forest{ display:inline; }
 
   .name-edit-btn{
     background:rgba(255,255,255,0.18); border:1.5px solid rgba(255,255,255,0.5); color:#fff;
@@ -431,6 +458,10 @@
     <span class="hero-star deco-night" style="top:34px; left:150px; font-size:9px;">✦</span>
     <span class="hero-star deco-night" style="top:12px; right:120px; font-size:14px;">✧</span>
     <span class="hero-star deco-night" style="top:46px; right:60px; font-size:16px;">🌙</span>
+    <span class="hero-star deco-forest" style="top:14px; left:24px; font-size:15px;">🌿</span>
+    <span class="hero-star deco-forest" style="top:34px; left:150px; font-size:12px;">🍃</span>
+    <span class="hero-star deco-forest" style="top:10px; right:110px; font-size:17px;">🌲</span>
+    <span class="hero-star deco-forest" style="top:48px; right:55px; font-size:12px;">🍃</span>
     <div id="header-title-block">
       <div class="hero-title">
         <span>🐾</span><span id="pet-name-display">我的貓咪</span><span>家計帳本</span>
@@ -640,19 +671,12 @@
 
     <div class="card">
       <h2>💱 幣別匯率設定</h2>
-      <p class="status-note" style="margin:0 0 10px;">先在這裡加好會用到的幣別跟匯率,新增紀錄時就能直接選。台幣(TWD)已內建,匯率固定是 1。</p>
+      <p class="status-note" style="margin:0 0 10px;">先在這裡加好會用到的幣別跟匯率(自己查好填入即可),新增紀錄時就能直接選。台幣(TWD)已內建,匯率固定是 1。</p>
       <div id="currency-rate-list"></div>
       <div class="form-grid" style="margin-top:10px;">
         <div><label>幣別代碼</label><input type="text" id="new-currency-code" placeholder="例如:JPY、USD"></div>
-        <div>
-          <label>匯率(1 單位 = ? 台幣)</label>
-          <div class="note-input-row">
-            <input type="number" id="new-currency-rate" placeholder="例如 0.21" min="0" step="0.0001">
-            <button type="button" class="mic-btn" id="btn-fetch-rate" title="抓今日參考匯率">🔄</button>
-          </div>
-        </div>
+        <div><label>匯率(1 單位 = ? 台幣)</label><input type="number" id="new-currency-rate" placeholder="例如 0.21" min="0" step="0.0001"></div>
       </div>
-      <p class="status-note" id="rate-fetch-hint" style="margin:0 0 10px;"></p>
       <button class="add-btn ghost" id="btn-add-currency">＋ 新增幣別</button>
     </div>
 
@@ -943,7 +967,7 @@ function restoreHeaderTitle(){
     <span>🐾</span><span id="pet-name-display">${escapeHtml(petName)}</span><span>家計帳本</span>
     <button class="name-edit-btn" id="edit-name-btn">✏️ 改名字</button>
     <button class="name-edit-btn" id="privacy-toggle-btn">${privacyMode?'🙈':'👁️'} 隱私模式</button>
-    <button class="name-edit-btn" id="theme-toggle-btn">${themeMode==='night'?'☀️':'🌙'} 切換主題</button>`;
+    <button class="name-edit-btn" id="theme-toggle-btn">${THEME_META[themeMode].icon} 切換主題</button>`;
   document.getElementById('edit-name-btn').addEventListener('click', startNameEdit);
   document.getElementById('privacy-toggle-btn').addEventListener('click', togglePrivacy);
   document.getElementById('theme-toggle-btn').addEventListener('click', toggleTheme);
@@ -958,20 +982,27 @@ function togglePrivacy(){
 
 let themeMode = 'warm';
 const K_THEME = 'cat-ledger-theme';
+const THEME_ORDER = ['warm','night','forest'];
+const THEME_META = {
+  warm:   { icon:'🌙', next:'切換主題', sub:'暖陽記帳日' },
+  night:  { icon:'🌲', next:'切換主題', sub:'星空記帳夜' },
+  forest: { icon:'☀️', next:'切換主題', sub:'森林記帳林' },
+};
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', themeMode);
   const btn = document.getElementById('theme-toggle-btn');
-  if(btn) btn.innerHTML = (themeMode==='night'?'☀️':'🌙') + ' 切換主題';
+  if(btn) btn.innerHTML = THEME_META[themeMode].icon + ' 切換主題';
   const sub = document.getElementById('hero-sub-text');
-  if(sub) sub.textContent = 'CAT HOUSEHOLD LEDGER · ' + (themeMode==='night' ? '星空記帳夜' : '暖陽記帳日');
+  if(sub) sub.textContent = 'CAT HOUSEHOLD LEDGER · ' + THEME_META[themeMode].sub;
 }
 function toggleTheme(){
-  themeMode = themeMode==='warm' ? 'night' : 'warm';
+  const i = THEME_ORDER.indexOf(themeMode);
+  themeMode = THEME_ORDER[(i+1) % THEME_ORDER.length];
   applyTheme();
   storageSet(K_THEME, themeMode);
 }
 async function loadTheme(){
-  try{ const v = await storageGet(K_THEME); if(v) themeMode = v; }catch(e){}
+  try{ const v = await storageGet(K_THEME); if(v && THEME_ORDER.includes(v)) themeMode = v; }catch(e){}
   applyTheme();
 }
 document.getElementById('theme-toggle-btn').addEventListener('click', toggleTheme);
@@ -1723,46 +1754,6 @@ async function loadTravel(){
 async function saveTravel(){ await storageSet(K_TRAVEL, JSON.stringify(travelData)); }
 
 /* -- currency rates -- */
-async function fetchReferenceRate(code){
-  try{
-    const res = await fetch(`https://api.frankfurter.app/latest?from=${encodeURIComponent(code)}&to=TWD`);
-    if(!res.ok) return null;
-    const data = await res.json();
-    const rate = data && data.rates && data.rates.TWD;
-    return (typeof rate==='number' && rate>0) ? rate : null;
-  }catch(e){
-    return null;
-  }
-}
-document.getElementById('btn-fetch-rate').addEventListener('click', async ()=>{
-  const code = document.getElementById('new-currency-code').value.trim().toUpperCase();
-  const hint = document.getElementById('rate-fetch-hint');
-  if(!code){ hint.textContent = '請先在左邊輸入幣別代碼(例如 JPY、USD),再抓匯率。'; return; }
-  const btn = document.getElementById('btn-fetch-rate');
-  btn.disabled = true;
-  hint.textContent = '🔄 查詢中...';
-  const rate = await fetchReferenceRate(code);
-  btn.disabled = false;
-  if(rate){
-    document.getElementById('new-currency-rate').value = rate.toFixed(4);
-    hint.textContent = `✓ 已帶入 ${code} 的今日參考匯率,實際匯率會因刷卡/換匯管道略有落差,建議對照你實際拿到的匯率微調。`;
-  }else{
-    hint.textContent = `抓不到「${code}」的參考匯率,請確認是不是正確的貨幣代碼(例如日圓是 JPY、美金是 USD),或直接手動輸入匯率。`;
-  }
-});
-async function refreshCurrencyRate(code){
-  const hint = document.getElementById('rate-fetch-hint');
-  hint.textContent = `🔄 更新 ${code} 匯率中...`;
-  const rate = await fetchReferenceRate(code);
-  if(rate){
-    travelData.rates[code] = rate;
-    saveTravel(); renderTravelTab();
-    document.getElementById('rate-fetch-hint').textContent = `✓ ${code} 已更新為今日參考匯率 ${rate.toFixed(4)}`;
-  }else{
-    hint.textContent = `抓不到「${code}」的今日匯率,維持原本設定的數字。`;
-  }
-}
-
 document.getElementById('btn-add-currency').addEventListener('click', ()=>{
   const code = document.getElementById('new-currency-code').value.trim().toUpperCase();
   const rate = parseFloat(document.getElementById('new-currency-rate').value);
@@ -1853,7 +1844,7 @@ function renderTravelTab(){
     <div class="currency-row">
       <span><span class="code">${escapeHtml(code)}</span> = ${travelData.rates[code]} 台幣</span>
       <span>
-        ${code!=='TWD' ? `<button class="del" onclick="refreshCurrencyRate('${code}')" style="margin-right:8px;">🔄 更新</button><button class="del" onclick="deleteCurrency('${code}')">刪除</button>` : '<span style="font-size:10px; color:var(--ink-soft);">內建</span>'}
+        ${code!=='TWD' ? `<button class="del" onclick="deleteCurrency('${code}')">刪除</button>` : '<span style="font-size:10px; color:var(--ink-soft);">內建</span>'}
       </span>
     </div>`).join('');
 
