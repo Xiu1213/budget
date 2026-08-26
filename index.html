@@ -250,28 +250,31 @@
   .adv-sum-box{ flex:1; background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:10px 12px;}
   .adv-sum-box .label{ font-size:10.5px; color:var(--ink-soft); font-weight:700; margin-bottom:3px;}
   .adv-sum-box .value{ font-family:'Baloo 2'; font-weight:800; font-size:16px;}
-  .advance-card{
-    background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:12px 14px; margin-bottom:10px;
+  .trip-date.owed{ color:var(--mint-deep); font-weight:800; }
+  .trip-date.iowe{ color:var(--brick); font-weight:800; }
+  .adv-item-list{ margin-bottom:12px; }
+  .adv-item-card{
+    background:var(--pink-pale); border-radius:14px; padding:12px 14px; margin-bottom:8px;
   }
-  .advance-card.settled{ opacity:.55; }
+  .adv-item-card.settled{ opacity:.55; }
   .adv-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
-  .adv-info .item{ font-family:'M PLUS Rounded 1c'; font-weight:800; font-size:13.5px;}
-  .adv-info .meta{ font-size:11px; color:var(--ink-soft); margin-top:2px;}
-  .adv-amt{ font-family:'Baloo 2'; font-weight:800; font-size:15px; white-space:nowrap;}
+  .adv-info .item{ font-family:'M PLUS Rounded 1c'; font-weight:800; font-size:13px;}
+  .adv-info .meta{ font-size:10.5px; color:var(--ink-soft); margin-top:2px;}
+  .adv-amt{ font-family:'Baloo 2'; font-weight:800; font-size:14px; white-space:nowrap;}
   .adv-amt.owed{ color:var(--mint-deep); }
   .adv-amt.iowe{ color:var(--brick); }
-  .adv-progress-track{ height:10px; border-radius:8px; background:var(--line); overflow:hidden; margin-top:10px;}
+  .adv-progress-track{ height:9px; border-radius:8px; background:#fff; overflow:hidden; margin-top:9px;}
   .adv-progress-fill{ height:100%; border-radius:8px; transition:width .3s ease; }
-  .adv-progress-labels{ display:flex; justify-content:space-between; font-size:10.5px; color:var(--ink-soft); margin-top:4px; font-weight:700;}
-  .adv-pay-form{ display:flex; gap:6px; margin-top:10px; }
-  .adv-pay-form input{ flex:1; min-width:0; }
+  .adv-progress-labels{ display:flex; justify-content:space-between; font-size:10px; color:var(--ink-soft); margin-top:4px; font-weight:700;}
+  .adv-pay-form{ display:flex; gap:6px; margin-top:9px; }
+  .adv-pay-form input{ flex:1; min-width:0; background:#fff; }
   .adv-pay-form button{ flex-shrink:0; padding:8px 12px; border-radius:10px; border:none; background:var(--pink); color:#fff; font-size:12px; font-weight:700; cursor:pointer;}
-  .adv-history{ margin-top:8px; }
-  .adv-history-row{ display:flex; justify-content:space-between; align-items:center; padding:4px 2px; font-size:11.5px; color:var(--ink-soft); border-bottom:1px dashed var(--line);}
+  .adv-history{ margin-top:6px; }
+  .adv-history-row{ display:flex; justify-content:space-between; align-items:center; padding:4px 2px; font-size:11px; color:var(--ink-soft); border-bottom:1px dashed var(--line);}
   .adv-actions{ display:flex; gap:6px; margin-top:8px; }
-  .adv-settle-btn{ flex:1; padding:6px; border-radius:10px; border:1.5px solid var(--line); background:#fff; font-size:11.5px; font-weight:700; cursor:pointer; color:var(--ink-soft);}
-  .adv-settle-btn.is-settled{ background:var(--pink-pale); border-color:var(--pink); color:var(--pink-deep); }
-  .adv-del-btn{ padding:6px 10px; border-radius:10px; border:none; background:none; color:var(--ink-soft); font-size:11.5px; cursor:pointer;}
+  .adv-settle-btn{ flex:1; padding:6px; border-radius:10px; border:1.5px solid var(--line); background:#fff; font-size:11px; font-weight:700; cursor:pointer; color:var(--ink-soft);}
+  .adv-settle-btn.is-settled{ background:#fff; border-color:var(--pink); color:var(--pink-deep); }
+  .adv-del-btn{ padding:6px 10px; border-radius:10px; border:none; background:none; color:var(--ink-soft); font-size:11px; cursor:pointer;}
   .env-sum-box{ flex:1; min-width:100px; background:var(--card); border-radius:16px; padding:11px 12px; box-shadow:0 4px 14px rgba(58,52,80,0.06);}
   .env-sum-box .label{ font-size:10.5px; color:var(--ink-soft); font-weight:700; margin-bottom:3px;}
   .env-sum-box .value{ font-family:'Baloo 2'; font-weight:800; font-size:16px;}
@@ -540,7 +543,6 @@
           <div class="type-toggle">
             <div class="type-btn active-income" id="btn-income" data-type="income">收入</div>
             <div class="type-btn" id="btn-expense" data-type="expense">支出</div>
-            <div class="type-btn" id="btn-advance" data-type="advance">代墊</div>
           </div>
         </div>
       </div>
@@ -554,21 +556,6 @@
       </div>
       <div class="form-grid full" id="custom-category-row" style="display:none;">
         <div><label>自訂類別名稱</label><input type="text" id="in-category-custom" placeholder="輸入新的類別名稱"></div>
-      </div>
-      <div class="form-grid full" id="advance-fields-row" style="display:none;">
-        <div>
-          <label>對象姓名</label>
-          <input type="text" id="in-advance-name" placeholder="例如:小美">
-        </div>
-      </div>
-      <div class="form-grid full" id="advance-direction-row" style="display:none;">
-        <div>
-          <label>方向</label>
-          <div class="type-toggle">
-            <div class="type-btn active-income" id="btn-advance-owed" data-dir="owed_to_me">朋友欠我</div>
-            <div class="type-btn" id="btn-advance-iowe" data-dir="i_owe">我欠朋友</div>
-          </div>
-        </div>
       </div>
       <div class="form-grid">
         <div>
@@ -619,8 +606,13 @@
         <div class="adv-sum-box"><div class="label">別人欠我</div><div class="value" style="color:var(--mint-deep);" id="adv-owed-total">$0</div></div>
         <div class="adv-sum-box"><div class="label">我欠別人</div><div class="value" style="color:var(--brick);" id="adv-iowe-total">$0</div></div>
       </div>
-      <div id="advance-list"></div>
+      <div class="form-grid full">
+        <div><label>新增代墊對象</label><input type="text" id="new-adv-person" placeholder="例如:小美"></div>
+      </div>
+      <button class="add-btn ghost" id="btn-add-adv-person">＋ 建立對象</button>
     </div>
+
+    <div id="advance-list"></div>
 
     <div class="card">
       <h2>💾 資料備份</h2>
@@ -1079,34 +1071,19 @@ document.querySelectorAll('.tab').forEach(tab=>{
 
 /* ============ TAB 1: 收支記錄 ============ */
 let currentType = 'income';
-let advanceDirection = 'owed_to_me';
 document.getElementById('category-row').style.display='none';
 document.getElementById('in-note').placeholder = '例如:薪水、獎金';
 function setRecordType(type){
   currentType = type;
   document.getElementById('btn-income').classList.toggle('active-income', type==='income');
   document.getElementById('btn-expense').classList.toggle('active-expense', type==='expense');
-  document.getElementById('btn-advance').classList.toggle('active-expense', type==='advance');
   document.getElementById('category-row').style.display = type==='expense' ? 'grid' : 'none';
   if(type!=='expense') document.getElementById('custom-category-row').style.display='none';
-  document.getElementById('advance-fields-row').style.display = type==='advance' ? 'grid' : 'none';
-  document.getElementById('advance-direction-row').style.display = type==='advance' ? 'grid' : 'none';
-  const placeholders = { income:'例如:薪水、獎金', expense:'例如:早餐、出去玩', advance:'例如:聚餐代墊、代購' };
+  const placeholders = { income:'例如:薪水、獎金', expense:'例如:早餐、出去玩' };
   document.getElementById('in-note').placeholder = placeholders[type];
 }
 document.getElementById('btn-income').addEventListener('click', ()=> setRecordType('income'));
 document.getElementById('btn-expense').addEventListener('click', ()=> setRecordType('expense'));
-document.getElementById('btn-advance').addEventListener('click', ()=> setRecordType('advance'));
-document.getElementById('btn-advance-owed').addEventListener('click', ()=>{
-  advanceDirection = 'owed_to_me';
-  document.getElementById('btn-advance-owed').classList.add('active-income');
-  document.getElementById('btn-advance-iowe').classList.remove('active-expense');
-});
-document.getElementById('btn-advance-iowe').addEventListener('click', ()=>{
-  advanceDirection = 'i_owe';
-  document.getElementById('btn-advance-iowe').classList.add('active-expense');
-  document.getElementById('btn-advance-owed').classList.remove('active-income');
-});
 document.getElementById('in-date').value = new Date().toISOString().slice(0,10);
 
 document.getElementById('in-category').addEventListener('change', ()=>{
@@ -1199,18 +1176,6 @@ document.getElementById('btn-add').addEventListener('click', ()=>{
   const amount = parseFloat(document.getElementById('in-amount').value);
   const note = document.getElementById('in-note').value.trim();
 
-  if(currentType==='advance'){
-    const name = document.getElementById('in-advance-name').value.trim();
-    if(!date || !note || !name || !amount || amount<=0){ alert('請填寫日期、項目內容、對象姓名,並輸入有效金額'); return; }
-    advancePayments.push({ id: Date.now(), date, item: note, name, direction: advanceDirection, amount, settled:false, payments:[] });
-    advancePayments.sort((a,b)=> b.date.localeCompare(a.date));
-    document.getElementById('in-advance-name').value='';
-    document.getElementById('in-amount').value='';
-    document.getElementById('in-note').value='';
-    saveAdvance(); renderAll();
-    return;
-  }
-
   let category = '';
   if(currentType==='expense'){
     const selectVal = document.getElementById('in-category').value;
@@ -1231,131 +1196,232 @@ document.getElementById('btn-add').addEventListener('click', ()=>{
 });
 function deleteEntry(id){ entries = entries.filter(e=>e.id!==id); saveEntries(); renderAll(); }
 
-/* ============ 代墊款項(支援分次還款) ============ */
-let advancePayments = [];
+/* ============ 代墊款項(依對象分組,支援分次還款) ============ */
+let advancePeople = [];
 const K_ADVANCE = 'cat-ledger-advance';
 async function loadAdvance(){
-  try{ const v = await storageGet(K_ADVANCE); advancePayments = v?JSON.parse(v):[]; }catch(e){ advancePayments=[]; }
-  // migrate old single-settle format into payments[] array
-  advancePayments.forEach(a=>{
-    if(!a.payments){
-      a.payments = (a.settled && a.linkedEntryId)
-        ? [{ id: Date.now()+Math.floor(Math.random()*1000), date: a.date, amount: a.amount, linkedEntryId: a.linkedEntryId }]
-        : [];
-      delete a.linkedEntryId;
+  try{
+    const v = await storageGet(K_ADVANCE);
+    const raw = v ? JSON.parse(v) : [];
+    if(raw.length===0 || raw[0].items){
+      advancePeople = raw;
+    }else{
+      // migrate old flat format (one record per debt) into grouped-by-name
+      const grouped = {};
+      raw.forEach(a=>{
+        if(!a.payments){
+          a.payments = (a.settled && a.linkedEntryId)
+            ? [{ id: Date.now()+Math.floor(Math.random()*1000), date: a.date, amount: a.amount, linkedEntryId: a.linkedEntryId }]
+            : [];
+        }
+        if(!grouped[a.name]) grouped[a.name] = { id: Date.now()+Math.floor(Math.random()*1000), name: a.name, items: [] };
+        grouped[a.name].items.push({ id:a.id, date:a.date, item:a.item, direction:a.direction, amount:a.amount, payments:a.payments, settled:a.settled });
+      });
+      advancePeople = Object.values(grouped);
     }
-  });
+  }catch(e){ advancePeople = []; }
   renderAdvanceSection();
 }
-async function saveAdvance(){ await storageSet(K_ADVANCE, JSON.stringify(advancePayments)); }
+async function saveAdvance(){ await storageSet(K_ADVANCE, JSON.stringify(advancePeople)); }
 
-function advPaidSoFar(adv){ return adv.payments.reduce((s,p)=>s+p.amount,0); }
-function advRemaining(adv){ return Math.max(0, adv.amount - advPaidSoFar(adv)); }
+function advItemPaid(it){ return it.payments.reduce((s,p)=>s+p.amount,0); }
+function advItemRemaining(it){ return Math.max(0, it.amount - advItemPaid(it)); }
 
-function addAdvancePayment(advId){
-  const adv = advancePayments.find(a=>a.id===advId);
-  if(!adv) return;
-  const amtInput = document.getElementById('adv-pay-amount-'+advId);
+document.getElementById('btn-add-adv-person').addEventListener('click', ()=>{
+  const name = document.getElementById('new-adv-person').value.trim();
+  if(!name){ alert('請輸入姓名'); return; }
+  if(advancePeople.find(p=>p.name===name)){ alert('這個對象已經有卡片了,直接在下面的卡片新增項目即可'); return; }
+  advancePeople.push({ id: Date.now(), name, items: [] });
+  document.getElementById('new-adv-person').value='';
+  saveAdvance(); renderAdvanceSection();
+});
+function deleteAdvPerson(personId){
+  const person = advancePeople.find(p=>p.id===personId);
+  if(!person) return;
+  if(!confirm(`確定要刪除「${person.name}」的所有代墊紀錄嗎?`)) return;
+  const linkedIds = [];
+  person.items.forEach(it=> it.payments.forEach(p=>{ if(p.linkedEntryId) linkedIds.push(p.linkedEntryId); }));
+  if(linkedIds.length>0){
+    entries = entries.filter(e=>!linkedIds.includes(e.id));
+    saveEntries();
+  }
+  advancePeople = advancePeople.filter(p=>p.id!==personId);
+  saveAdvance(); renderAll();
+}
+
+const advItemDirection = {};
+function setAdvItemDirection(personId, dir){
+  advItemDirection[personId] = dir;
+  document.getElementById(`adv-dir-owed-${personId}`).classList.toggle('active-income', dir==='owed_to_me');
+  document.getElementById(`adv-dir-iowe-${personId}`).classList.toggle('active-expense', dir==='i_owe');
+}
+function addAdvItem(personId){
+  const person = advancePeople.find(p=>p.id===personId);
+  if(!person) return;
+  const date = document.getElementById(`adv-item-date-${personId}`).value;
+  const note = document.getElementById(`adv-item-note-${personId}`).value.trim();
+  const amount = parseFloat(document.getElementById(`adv-item-amount-${personId}`).value);
+  const direction = advItemDirection[personId] || 'owed_to_me';
+  if(!date || !note || !amount || amount<=0){ alert('請填寫日期、項目內容,並輸入有效金額'); return; }
+  person.items.push({ id: Date.now(), date, item: note, direction, amount, payments:[], settled:false });
+  person.items.sort((a,b)=> b.date.localeCompare(a.date));
+  document.getElementById(`adv-item-note-${personId}`).value='';
+  document.getElementById(`adv-item-amount-${personId}`).value='';
+  saveAdvance(); renderAdvanceSection();
+}
+function deleteAdvItem(personId, itemId){
+  const person = advancePeople.find(p=>p.id===personId);
+  if(!person) return;
+  const item = person.items.find(it=>it.id===itemId);
+  if(item){
+    const linkedIds = item.payments.map(p=>p.linkedEntryId).filter(Boolean);
+    if(linkedIds.length>0){
+      if(!confirm('這筆有還款紀錄已計入月結算,刪除會一併移除對應的收支紀錄,確定嗎?')) return;
+      entries = entries.filter(e=>!linkedIds.includes(e.id));
+      saveEntries();
+    }
+  }
+  person.items = person.items.filter(it=>it.id!==itemId);
+  saveAdvance(); renderAll();
+}
+function addAdvItemPayment(personId, itemId){
+  const person = advancePeople.find(p=>p.id===personId);
+  const item = person && person.items.find(it=>it.id===itemId);
+  if(!item) return;
+  const amtInput = document.getElementById(`adv-pay-amount-${itemId}`);
   const amount = parseFloat(amtInput.value);
-  const remaining = advRemaining(adv);
+  const remaining = advItemRemaining(item);
   if(!amount || amount<=0){ alert('請輸入有效的還款金額'); return; }
   if(amount > remaining + 0.001){ alert(`這筆還款金額不能超過剩餘的 ${fmt(remaining)}`); return; }
   const date = new Date().toISOString().slice(0,10);
-  const linkType = adv.direction==='owed_to_me' ? 'income' : 'expense';
-  const linkedEntry = { id: Date.now(), date, category:'', type: linkType, amount, note: `代墊還款:${adv.item}(${adv.name})` };
+  const linkType = item.direction==='owed_to_me' ? 'income' : 'expense';
+  const linkedEntry = { id: Date.now(), date, category:'', type: linkType, amount, note: `代墊還款:${item.item}(${person.name})` };
   entries.push(linkedEntry);
   entries.sort((a,b)=> b.date.localeCompare(a.date));
-  adv.payments.push({ id: Date.now()+1, date, amount, linkedEntryId: linkedEntry.id });
-  if(advRemaining(adv) <= 0.001) adv.settled = true;
+  item.payments.push({ id: Date.now()+1, date, amount, linkedEntryId: linkedEntry.id });
+  if(advItemRemaining(item) <= 0.001) item.settled = true;
   saveEntries(); saveAdvance(); renderAll();
 }
-function deleteAdvPayment(advId, paymentId){
-  const adv = advancePayments.find(a=>a.id===advId);
-  if(!adv) return;
-  const payment = adv.payments.find(p=>p.id===paymentId);
+function deleteAdvItemPayment(personId, itemId, paymentId){
+  const person = advancePeople.find(p=>p.id===personId);
+  const item = person && person.items.find(it=>it.id===itemId);
+  if(!item) return;
+  const payment = item.payments.find(p=>p.id===paymentId);
   if(payment && payment.linkedEntryId){
     entries = entries.filter(e=>e.id!==payment.linkedEntryId);
     saveEntries();
   }
-  adv.payments = adv.payments.filter(p=>p.id!==paymentId);
-  adv.settled = false;
+  item.payments = item.payments.filter(p=>p.id!==paymentId);
+  item.settled = false;
   saveAdvance(); renderAll();
 }
-function closeAdvance(advId){
-  const adv = advancePayments.find(a=>a.id===advId);
-  if(!adv) return;
+function closeAdvItem(personId, itemId){
+  const person = advancePeople.find(p=>p.id===personId);
+  const item = person && person.items.find(it=>it.id===itemId);
+  if(!item) return;
   if(!confirm('結案後,剩餘還沒還的金額就不再追蹤了,確定要結案嗎?')) return;
-  adv.settled = true;
-  saveAdvance(); renderAll();
+  item.settled = true;
+  saveAdvance(); renderAdvanceSection();
 }
-function reopenAdvance(advId){
-  const adv = advancePayments.find(a=>a.id===advId);
-  if(!adv) return;
-  adv.settled = false;
-  saveAdvance(); renderAll();
-}
-function deleteAdvance(id){
-  const adv = advancePayments.find(a=>a.id===id);
-  if(!adv) return;
-  const hasLinked = adv.payments.some(p=>p.linkedEntryId);
-  if(hasLinked){
-    if(!confirm('這筆有還款紀錄已計入月結算,刪除會一併移除對應的收支紀錄,確定嗎?')) return;
-    const linkedIds = adv.payments.map(p=>p.linkedEntryId).filter(Boolean);
-    entries = entries.filter(e=>!linkedIds.includes(e.id));
-    saveEntries();
-  }
-  advancePayments = advancePayments.filter(a=>a.id!==id);
-  saveAdvance(); renderAll();
+function reopenAdvItem(personId, itemId){
+  const person = advancePeople.find(p=>p.id===personId);
+  const item = person && person.items.find(it=>it.id===itemId);
+  if(!item) return;
+  item.settled = false;
+  saveAdvance(); renderAdvanceSection();
 }
 
 function renderAdvanceSection(){
   const list = document.getElementById('advance-list');
-  const owedTotal = advancePayments.filter(a=>a.direction==='owed_to_me' && !a.settled).reduce((s,a)=>s+advRemaining(a),0);
-  const ioweTotal = advancePayments.filter(a=>a.direction==='i_owe' && !a.settled).reduce((s,a)=>s+advRemaining(a),0);
+  let owedTotal=0, ioweTotal=0;
+  advancePeople.forEach(p=> p.items.forEach(it=>{
+    if(it.settled) return;
+    const r = advItemRemaining(it);
+    if(it.direction==='owed_to_me') owedTotal+=r; else ioweTotal+=r;
+  }));
   document.getElementById('adv-owed-total').textContent = fmt(owedTotal);
   document.getElementById('adv-iowe-total').textContent = fmt(ioweTotal);
 
-  if(advancePayments.length===0){
-    list.innerHTML = '<p class="empty-hint">還沒有代墊紀錄,在上方選「代墊」新增一筆吧</p>';
+  if(advancePeople.length===0){
+    list.innerHTML = '<p class="empty-hint">還沒有代墊對象,在上方新增第一個吧</p>';
     return;
   }
-  list.innerHTML = advancePayments.map(a=>{
-    const dirLabel = a.direction==='owed_to_me' ? `${escapeHtml(a.name)} 欠我` : `我欠 ${escapeHtml(a.name)}`;
-    const amtClass = a.direction==='owed_to_me' ? 'owed' : 'iowe';
-    const paid = advPaidSoFar(a);
-    const remaining = advRemaining(a);
-    const pct = a.amount>0 ? Math.min(100, paid/a.amount*100) : 0;
-    const historyRows = a.payments.length===0 ? '' : `
-      <div class="adv-history">
-        ${a.payments.map(p=>`
-          <div class="adv-history-row">
-            <span>${p.date} 還了 ${fmt(p.amount)}</span>
-            <button class="del-btn" onclick="deleteAdvPayment(${a.id},${p.id})">✕</button>
-          </div>`).join('')}
-      </div>`;
-    const payForm = (!a.settled && remaining>0) ? `
-      <div class="adv-pay-form">
-        <input type="number" id="adv-pay-amount-${a.id}" placeholder="這次還了多少" min="0" step="1" max="${remaining}">
-        <button onclick="addAdvancePayment(${a.id})">登記還款</button>
-      </div>` : '';
-    return `
-      <div class="advance-card ${a.settled?'settled':''}">
-        <div class="adv-top">
-          <div class="adv-info">
-            <div class="item">${escapeHtml(a.item)}</div>
-            <div class="meta">${a.date} · ${dirLabel}</div>
+  list.innerHTML = advancePeople.map(person=>{
+    let net = 0;
+    person.items.forEach(it=>{ if(!it.settled){ const r=advItemRemaining(it); net += it.direction==='owed_to_me' ? r : -r; } });
+    const netLabel = net>0.001 ? `${escapeHtml(person.name)} 欠我 ${fmt(net)}` : net<-0.001 ? `我欠 ${escapeHtml(person.name)} ${fmt(Math.abs(net))}` : '目前已結清';
+    const netClass = net>0.001 ? 'owed' : net<-0.001 ? 'iowe' : '';
+    const dir = advItemDirection[person.id] || 'owed_to_me';
+
+    const itemsHtml = person.items.length===0 ? '<p class="empty-hint" style="margin:8px 0;">還沒有項目,在下面新增第一筆吧</p>' : person.items.map(it=>{
+      const paid = advItemPaid(it);
+      const remaining = advItemRemaining(it);
+      const pct = it.amount>0 ? Math.min(100, paid/it.amount*100) : 0;
+      const amtClass = it.direction==='owed_to_me' ? 'owed' : 'iowe';
+      const dirLabel = it.direction==='owed_to_me' ? '對方欠我' : '我欠對方';
+      const historyRows = it.payments.length===0 ? '' : `
+        <div class="adv-history">
+          ${it.payments.map(p=>`
+            <div class="adv-history-row">
+              <span>${p.date} 還了 ${fmt(p.amount)}</span>
+              <button class="del-btn" onclick="deleteAdvItemPayment(${person.id},${it.id},${p.id})">✕</button>
+            </div>`).join('')}
+        </div>`;
+      const payForm = (!it.settled && remaining>0) ? `
+        <div class="adv-pay-form">
+          <input type="number" id="adv-pay-amount-${it.id}" placeholder="這次還了多少" min="0" step="1" max="${remaining}">
+          <button onclick="addAdvItemPayment(${person.id},${it.id})">登記還款</button>
+        </div>` : '';
+      return `
+        <div class="adv-item-card ${it.settled?'settled':''}">
+          <div class="adv-top">
+            <div class="adv-info">
+              <div class="item">${escapeHtml(it.item)}</div>
+              <div class="meta">${it.date} · ${dirLabel}</div>
+            </div>
+            <div class="adv-amt ${amtClass}">${fmt(it.amount)}</div>
           </div>
-          <div class="adv-amt ${amtClass}">${fmt(a.amount)}</div>
+          <div class="adv-progress-track"><div class="adv-progress-fill" style="width:${pct}%; background:${amtClass==='owed'?'var(--mint-deep)':'var(--brick)'};"></div></div>
+          <div class="adv-progress-labels"><span>已還 ${fmt(paid)}</span><span>${it.settled ? '已結清' : '剩餘 '+fmt(remaining)}</span></div>
+          ${payForm}
+          ${historyRows}
+          <div class="adv-actions">
+            ${it.settled
+              ? `<button class="adv-settle-btn is-settled" onclick="reopenAdvItem(${person.id},${it.id})">✓ 已結案(點擊重開)</button>`
+              : `<button class="adv-settle-btn" onclick="closeAdvItem(${person.id},${it.id})">結案</button>`}
+            <button class="adv-del-btn" onclick="deleteAdvItem(${person.id},${it.id})">刪除</button>
+          </div>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="trip-card">
+        <div class="trip-header">
+          <div>
+            <div class="trip-name">🤝 ${escapeHtml(person.name)}</div>
+            <div class="trip-date ${netClass}">${netLabel}</div>
+          </div>
+          <div class="trip-actions">
+            <button class="trip-del-btn" onclick="deleteAdvPerson(${person.id})">刪除對象</button>
+          </div>
         </div>
-        <div class="adv-progress-track"><div class="adv-progress-fill" style="width:${pct}%; background:${amtClass==='owed'?'var(--mint-deep)':'var(--brick)'};"></div></div>
-        <div class="adv-progress-labels"><span>已還 ${fmt(paid)}</span><span>${a.settled ? '已結清' : '剩餘 '+fmt(remaining)}</span></div>
-        ${payForm}
-        ${historyRows}
-        <div class="adv-actions">
-          ${a.settled
-            ? `<button class="adv-settle-btn is-settled" onclick="reopenAdvance(${a.id})">✓ 已結案(點擊重開)</button>`
-            : `<button class="adv-settle-btn" onclick="closeAdvance(${a.id})">結案(不再追蹤剩餘)</button>`}
-          <button class="adv-del-btn" onclick="deleteAdvance(${a.id})">刪除</button>
+        <div class="adv-item-list">${itemsHtml}</div>
+        <div class="trip-entry-form">
+          <div class="form-grid">
+            <div><label>日期</label><input type="date" id="adv-item-date-${person.id}" value="${new Date().toISOString().slice(0,10)}"></div>
+            <div>
+              <label>方向</label>
+              <div class="type-toggle">
+                <div class="type-btn ${dir==='owed_to_me'?'active-income':''}" id="adv-dir-owed-${person.id}" onclick="setAdvItemDirection(${person.id},'owed_to_me')">對方欠我</div>
+                <div class="type-btn ${dir==='i_owe'?'active-expense':''}" id="adv-dir-iowe-${person.id}" onclick="setAdvItemDirection(${person.id},'i_owe')">我欠對方</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div><label>項目內容</label><input type="text" id="adv-item-note-${person.id}" placeholder="例如:聚餐代墊"></div>
+            <div><label>金額</label><input type="number" id="adv-item-amount-${person.id}" placeholder="0" min="0" step="1"></div>
+          </div>
+          <button class="add-btn" onclick="addAdvItem(${person.id})">＋ 新增一筆</button>
         </div>
       </div>`;
   }).join('');
@@ -1399,7 +1465,7 @@ function getFilteredEntries(){
 
 /* ---- backup export/import ---- */
 document.getElementById('btn-export').addEventListener('click', ()=>{
-  const data = { entries, budgets, savings, petName, advancePayments, travelData, exportedAt: new Date().toISOString() };
+  const data = { entries, budgets, savings, petName, advancePeople, travelData, exportedAt: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1420,7 +1486,7 @@ document.getElementById('import-file-input').addEventListener('change', (e)=>{
       savings = data.savings && data.savings.goals ? data.savings : savings;
       if(!savings.archivedGoals) savings.archivedGoals=[];
       petName = data.petName || petName;
-      advancePayments = data.advancePayments || [];
+      advancePeople = data.advancePeople || [];
       if(data.travelData){
         travelData = data.travelData;
         if(!travelData.rates) travelData.rates = { TWD:1 };
@@ -1490,23 +1556,26 @@ function renderRecordTab(){
   const tb = document.getElementById('tb-body');
 
   if(filterCategory==='__advance__'){
-    document.getElementById('tb-count').textContent = `共 ${advancePayments.length} 筆`;
-    if(advancePayments.length===0){
+    const flatItems = [];
+    advancePeople.forEach(p=> p.items.forEach(it=> flatItems.push({ personId:p.id, personName:p.name, ...it })));
+    flatItems.sort((a,b)=> b.date.localeCompare(a.date));
+    document.getElementById('tb-count').textContent = `共 ${flatItems.length} 筆`;
+    if(flatItems.length===0){
       tb.innerHTML = `<tr><td colspan="4" class="empty-row">尚無代墊紀錄</td></tr>`;
     }else{
-      tb.innerHTML = advancePayments.map(a=>{
-        const dirLabel = a.direction==='owed_to_me' ? `${escapeHtml(a.name)} 欠我` : `我欠 ${escapeHtml(a.name)}`;
-        const paid = advPaidSoFar(a);
-        const statusLabel = a.settled ? '已結清' : (paid>0 ? `已還 ${fmt(paid)}` : '未還');
+      tb.innerHTML = flatItems.map(it=>{
+        const dirLabel = it.direction==='owed_to_me' ? `${escapeHtml(it.personName)} 欠我` : `我欠 ${escapeHtml(it.personName)}`;
+        const paid = advItemPaid(it);
+        const statusLabel = it.settled ? '已結清' : (paid>0 ? `已還 ${fmt(paid)}` : '未還');
         return `
         <tr>
-          <td>${a.date}</td>
+          <td>${it.date}</td>
           <td>
             <span class="cat-tag">代墊 · ${statusLabel}</span><br>
-            <span class="note-cell">${escapeHtml(a.item)} · ${dirLabel}</span>
+            <span class="note-cell">${escapeHtml(it.item)} · ${dirLabel}</span>
           </td>
-          <td class="amt ${a.direction==='owed_to_me'?'income':'expense'}">${fmt(a.amount)}</td>
-          <td><button class="del-btn" onclick="deleteAdvance(${a.id})">✕</button></td>
+          <td class="amt ${it.direction==='owed_to_me'?'income':'expense'}">${fmt(it.amount)}</td>
+          <td><button class="del-btn" onclick="deleteAdvItem(${it.personId},${it.id})">✕</button></td>
         </tr>`;
       }).join('');
     }
