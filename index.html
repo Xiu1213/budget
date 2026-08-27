@@ -428,6 +428,24 @@
   .trip-entry-row .desc{ flex:1; }
   .trip-entry-row .orig{ font-size:10px; color:var(--ink-soft); display:block; }
 
+  .trip-notes-box{ margin-top:12px; }
+  .trip-notes-box label{ display:block; font-size:11px; color:var(--ink-soft); font-weight:700; margin-bottom:5px;}
+  .trip-notes-box textarea{
+    width:100%; min-height:70px; font-family:'Noto Sans TC'; font-size:13px; line-height:1.6;
+    padding:10px 12px; border:2px solid var(--line); border-radius:12px; background:#fff; color:var(--ink);
+    outline:none; resize:vertical; box-sizing:border-box;
+  }
+  .trip-notes-box textarea:focus{ border-color:var(--pink); }
+  .archive-notes{
+    margin-top:8px; font-size:12.5px; color:var(--ink); line-height:1.6; background:#fff;
+    border-radius:10px; padding:8px 10px; white-space:pre-wrap;
+  }
+  .archive-expand-btn{
+    margin-top:8px; background:none; border:1.5px solid var(--line); border-radius:10px; padding:5px 10px;
+    font-size:11px; font-weight:700; color:var(--ink-soft); cursor:pointer;
+  }
+  .archive-entries{ margin-top:8px; }
+
   .archive-trip-card{
     background:linear-gradient(135deg,#FFF6E0,var(--pink-pale)); border-radius:18px; padding:14px 16px; margin-bottom:10px;
   }
@@ -2069,6 +2087,8 @@ async function loadTravel(){
   if(!travelData.rates.TWD) travelData.rates.TWD = 1;
   if(!travelData.trips) travelData.trips = [];
   if(!travelData.archivedTrips) travelData.archivedTrips = [];
+  travelData.trips.forEach(t=>{ if(t.notes===undefined) t.notes=''; });
+  travelData.archivedTrips.forEach(t=>{ if(t.notes===undefined) t.notes=''; if(!t.entries) t.entries=[]; });
   document.getElementById('new-trip-date').value = new Date().toISOString().slice(0,10);
   renderTravelTab();
 }
@@ -2095,7 +2115,7 @@ document.getElementById('btn-add-trip').addEventListener('click', ()=>{
   const name = document.getElementById('new-trip-name').value.trim();
   const date = document.getElementById('new-trip-date').value || null;
   if(!name){ alert('請填寫行程名稱'); return; }
-  travelData.trips.push({ id: Date.now(), name, date, entries: [] });
+  travelData.trips.push({ id: Date.now(), name, date, entries: [], notes:'' });
   document.getElementById('new-trip-name').value='';
   saveTravel(); renderTravelTab();
 });
@@ -2110,7 +2130,7 @@ function archiveTrip(id){
   const trip = travelData.trips[i];
   let inc=0, exp=0;
   trip.entries.forEach(e=>{ if(e.type==='income') inc+=e.twd; else exp+=e.twd; });
-  travelData.archivedTrips.push({ id: trip.id, name: trip.name, date: trip.date, income: inc, expense: exp, entryCount: trip.entries.length, archivedDate: new Date().toISOString().slice(0,10) });
+  travelData.archivedTrips.push({ id: trip.id, name: trip.name, date: trip.date, income: inc, expense: exp, entryCount: trip.entries.length, archivedDate: new Date().toISOString().slice(0,10), entries: trip.entries, notes: trip.notes||'' });
   travelData.trips.splice(i,1);
   saveTravel(); renderTravelTab();
 }
@@ -2118,12 +2138,29 @@ function deleteArchivedTrip(id){
   travelData.archivedTrips = travelData.archivedTrips.filter(t=>t.id!==id);
   saveTravel(); renderTravelTab();
 }
+const expandedArchiveTrips = {};
+function toggleArchiveExpand(id){
+  expandedArchiveTrips[id] = !expandedArchiveTrips[id];
+  renderTravelTab();
+}
+function saveArchivedNotes(id){
+  const trip = travelData.archivedTrips.find(t=>t.id===id);
+  if(!trip) return;
+  trip.notes = document.getElementById('archive-notes-'+id).value;
+  saveTravel();
+}
 
 const tripEntryType = {};
 function setTripType(tripId, type){
   tripEntryType[tripId] = type;
   document.getElementById('trip-btn-income-'+tripId).classList.toggle('active-income', type==='income');
   document.getElementById('trip-btn-expense-'+tripId).classList.toggle('active-expense', type==='expense');
+}
+function saveTripNotes(tripId){
+  const trip = travelData.trips.find(t=>t.id===tripId);
+  if(!trip) return;
+  trip.notes = document.getElementById('trip-notes-'+tripId).value;
+  saveTravel();
 }
 function updateTripPreview(tripId){
   const currency = document.getElementById('trip-currency-'+tripId).value;
@@ -2227,6 +2264,10 @@ function renderTravelTab(){
             <p class="status-note" id="trip-preview-${trip.id}" style="margin:0 0 8px;"></p>
             <button class="add-btn" onclick="addTripEntry(${trip.id})">＋ 新增紀錄</button>
           </div>
+          <div class="trip-notes-box">
+            <label>✍️ 旅遊心得</label>
+            <textarea id="trip-notes-${trip.id}" placeholder="寫下這趟旅程的心得、回憶或想記住的事..." onblur="saveTripNotes(${trip.id})">${escapeHtml(trip.notes||'')}</textarea>
+          </div>
           <div class="trip-entries">${entryRows}</div>
         </div>`;
     }).join('');
@@ -2239,7 +2280,16 @@ function renderTravelTab(){
   }else{
     archiveSection.innerHTML = `
       <div class="honor-title">🏆 旅行回顧</div>
-      ${[...travelData.archivedTrips].reverse().map(t=>`
+      ${[...travelData.archivedTrips].reverse().map(t=>{
+        const expanded = !!expandedArchiveTrips[t.id];
+        const entriesList = (t.entries||[]).length===0
+          ? '<p class="empty-hint" style="margin:6px 0;">這趟旅程沒有明細紀錄</p>'
+          : (t.entries||[]).map(e=>`
+              <div class="trip-entry-row">
+                <span class="desc">${escapeHtml(e.note)}<span class="orig">${e.amount.toLocaleString('zh-TW')} ${escapeHtml(e.currency)}</span></span>
+                <span class="amt ${e.type}">${e.type==='income'?'+':'-'}${fmt(e.twd)}</span>
+              </div>`).join('');
+        return `
         <div class="archive-trip-card">
           <div style="display:flex; justify-content:space-between; align-items:flex-start;">
             <div>
@@ -2248,7 +2298,14 @@ function renderTravelTab(){
             </div>
             <button class="honor-del" onclick="deleteArchivedTrip(${t.id})">移除</button>
           </div>
-        </div>`).join('')}
+          <button class="archive-expand-btn" onclick="toggleArchiveExpand(${t.id})">${expanded?'收合明細 ▲':'查看明細 ▼'}</button>
+          ${expanded ? `<div class="archive-entries">${entriesList}</div>` : ''}
+          <div class="trip-notes-box">
+            <label>✍️ 旅遊心得</label>
+            <textarea id="archive-notes-${t.id}" placeholder="寫下這趟旅程的心得、回憶或想記住的事..." onblur="saveArchivedNotes(${t.id})">${escapeHtml(t.notes||'')}</textarea>
+          </div>
+        </div>`;
+      }).join('')}
     `;
   }
 }
